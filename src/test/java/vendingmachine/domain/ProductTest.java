@@ -2,6 +2,7 @@ package vendingmachine.domain;
 
 import static org.assertj.core.api.Assertions.*;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -9,11 +10,16 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 class ProductTest {
 
+    @AfterEach
+    void clearData() {
+        ProductRepository.clear();
+    }
+
     @DisplayName("중복된 상품명 입력 에러 테스트")
     @ParameterizedTest
     @CsvSource(value = {"콜라, 1500, 20"})
     void DuplicateName(String name, int price, int amount) {
-        new Product(name, price, amount);
+        ProductRepository.add(new Product(name, price, amount));
         assertThatThrownBy(() -> new Product(name, price, amount))
                 .isInstanceOf(IllegalArgumentException.class);
     }
