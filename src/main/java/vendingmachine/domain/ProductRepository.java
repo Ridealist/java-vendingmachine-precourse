@@ -8,9 +8,12 @@ public class ProductRepository {
 
     private static final List<Product> products = new ArrayList<>();
 
-
-    public static void save(Product product) {
+    public static void add(Product product) {
         products.add(product);
+    }
+
+    public static void clear() {
+        products.clear();
     }
 
     public static Product getFromName(String name) {

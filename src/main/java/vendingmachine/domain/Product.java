@@ -19,7 +19,6 @@ public class Product {
         this.name = name;
         this.price = price;
         this.amount = amount;
-        ProductRepository.save(this);
     }
 
     private void validate(String name, int price, int amount) {
