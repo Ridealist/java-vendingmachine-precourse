@@ -58,4 +58,39 @@ public class Change {
     public Map<Integer, Integer> getCoins() {
         return Collections.unmodifiableMap(coins);
     }
+
+    public Map<Integer, Integer> getFinalCoins(int money) {
+        return Collections.unmodifiableMap(makeFinalCoins(money));
+    }
+
+    private Map<Integer, Integer> makeFinalCoins(int money) {
+        Map<Integer, Integer> finalCoins = new LinkedHashMap<>();
+        for (int amount : coins.keySet()) {
+            int sum = calculateCurrentChange(finalCoins);
+            if (amount > money || coins.get(amount) == 0 || sum >= money) {
+                continue;
+            }
+            int count = countPerAmount(amount, money);
+            finalCoins.put(amount, count);
+        }
+        return finalCoins;
+    }
+
+    private int countPerAmount(int amount, int money) {
+        int count = 0;
+        while (money >= amount && coins.get(amount) > 0) {
+            money -= amount;
+            count += 1;
+            coins.put(amount, coins.get(amount) - 1);
+        }
+        return count;
+    }
+
+    private int calculateCurrentChange(Map<Integer, Integer> coins) {
+        int sum = 0;
+        for (int amount : coins.keySet()) {
+            sum += amount * coins.get(amount);
+        }
+        return sum;
+    }
 }
