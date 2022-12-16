@@ -56,4 +56,12 @@ public class Product {
     public String getName() {
         return name;
     }
+
+    public boolean canBuy() {
+        return this.amount > 0;
+    }
+
+    public int getPrice() {
+        return price;
+    }
 }
